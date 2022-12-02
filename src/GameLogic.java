@@ -1,5 +1,7 @@
 public class GameLogic {
     private Field field;
+    private char userMove = 'x';
+
 
     GameLogic() {
         field = new Field();
@@ -10,13 +12,24 @@ public class GameLogic {
         return false;
     }
 
-    public void makeMove(int x, int y) {
+    private boolean validateCoordinates(int x, int y) {
+        char[][] state = field.getState();
         if (x > 3 || y > 3) {
+            return false;
+        }
+        return state[x][y] == 0;
+    }
+
+    public void makeMove(int x, int y) {
+        if (!validateCoordinates(x, y)) {
             System.out.println("Wrong coordinates!");
             return;
         }
+        userMove = field.changeState(x, y, userMove);
+    }
 
-        field.changeState(x, y);
+    public char getUserMove() {
+        return userMove;
     }
 
     public void printTable() {
