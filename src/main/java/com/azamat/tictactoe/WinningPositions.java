@@ -1,3 +1,5 @@
+package com.azamat.tictactoe;
+
 public interface WinningPositions {
     int[][][] winningPositions = {
         {
