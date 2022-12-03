@@ -1,4 +1,4 @@
-public class GameLogic {
+public class GameLogic implements WinningPositions {
     private Field field;
     private char userMove = 'x';
 
