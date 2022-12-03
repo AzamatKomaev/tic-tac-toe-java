@@ -6,19 +6,27 @@ public class GameRunner {
         Scanner scanner = new Scanner(System.in);
 
         int x, y;
+        char userMove;
+        boolean continueGame = true;
 
-        while (true) {
-            if (logic.getUserMove() == 'x') {
+        while (continueGame) {
+            userMove = logic.getUserMove();
+            if (userMove == 'x') {
                 System.out.println("now it's the X player's turn");
-            } else {
+            }
+            else {
                 System.out.println("now it's the O player's turn");
             }
             x = scanner.nextInt();
             y = scanner.nextInt();
 
-            logic.makeMove(x, y);
+            continueGame = logic.makeMove(x, y);
             System.out.println("Table:");
             logic.printTable();
+
+            if (!continueGame) {
+                System.out.println("The game was finished! The winner is: " + userMove);
+            }
         }
     }
 }

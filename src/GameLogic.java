@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class GameLogic implements WinningPositions {
     private Field field;
     private char userMove = 'x';
@@ -8,7 +10,14 @@ public class GameLogic implements WinningPositions {
     }
 
     private boolean checkWinningPositions() {
-        char[][] state = field.getState();
+        int[][] intState = field.translateStateToIntArray(userMove);
+
+        for (int[][] winningPosition : winningPositions) {
+            if (Arrays.deepEquals(intState, winningPosition)) {
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -20,12 +29,14 @@ public class GameLogic implements WinningPositions {
         return state[x][y] == 0;
     }
 
-    public void makeMove(int x, int y) {
+    public boolean makeMove(int x, int y) {
         if (!validateCoordinates(x, y)) {
             System.out.println("Wrong coordinates!");
-            return;
+            return true;
         }
+
         userMove = field.changeState(x, y, userMove);
+        return !checkWinningPositions();
     }
 
     public char getUserMove() {
@@ -37,9 +48,14 @@ public class GameLogic implements WinningPositions {
 
         for (int i=0; i<3; i++) {
             for (int j=0; j<3; j++) {
-                System.out.print(state[i][j] + " ");
+                if (state[i][j] == 0) {
+                    System.out.print("*" + " ");
+                }
+                else {
+                    System.out.print(state[i][j] + " ");
+                }
             }
-            System.out.println();
+            System.out.println("");
         }
     }
 }
